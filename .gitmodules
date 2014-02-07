@@ -1,0 +1,3 @@
+[submodule "pelican/puppet"]
+	path = pelican/puppet
+	url = https://github.com/innyso/puppet.git
