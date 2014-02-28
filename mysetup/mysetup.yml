@@ -1,0 +1,10 @@
+---
+ - hosts: all
+   sudo: yes
+   vars:
+    users:
+     - vagrant
+   roles:
+    - common
+    - vim
+    - oh-my-zsh
