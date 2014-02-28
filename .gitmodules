@@ -1,3 +1,6 @@
 [submodule "pelican/puppet"]
 	path = pelican/puppet
 	url = https://github.com/innyso/puppet.git
+[submodule "mysetup/ansible"]
+	path = mysetup/ansible
+	url = https://github.com/innyso/ansible.git
