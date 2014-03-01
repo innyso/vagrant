@@ -14,5 +14,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	config.vm.provision :shell, :path => "ansible/scripts/ansible_setup.sh"
 	config.vm.provision :shell, :path => "ansible/scripts/key_setup.sh"
-	config.vm.provision :shell, :inline => "export ANSIBLE_CONFIG=/vagrant/ansible.cfg; ansible-playbook -i '127.0.0.1,' /vagrant/mysetup.yml", :privilege => false
+	config.vm.provision :shell, :inline => "export ANSIBLE_CONFIG=/vagrant/ansible.cfg; ansible-playbook -i '127.0.0.1,' /vagrant/mysetup.yml", :privileged => false
 end

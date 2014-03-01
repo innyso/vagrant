@@ -1,10 +1,23 @@
 ---
  - hosts: all
-   sudo: yes
+   accelerate: true
    vars:
     users:
      - vagrant
+    plugins:
+     - 'tpope/vim-fugitive'
+     - 'Lokaltog/vim-easymotion'
+     - 'FuzzyFinder'
+     - 'git://git.wincent.com/command-t.git'
+     - 'L9'
+     - 'scrooloose/nerdtree'
+     - 'Lokaltog/powerline'
+     - 'lsdr/monokai'
+     - 'bling/vim-airline'
+     - 'flazz/vim-colorschemes' 
+     - 'https://github.com/rosenfeld/conque-term'
+     - 'https://github.com/nathanaelkane/vim-indent-guides'
    roles:
     - common
-    - vim
     - oh-my-zsh
+    - vim
