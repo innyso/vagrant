@@ -1,15 +1,15 @@
 ---
  - hosts: all
-   accelerate: true
    vars:
     users:
      - vagrant
+    state: present
     plugins:
      - 'tpope/vim-fugitive'
      - 'Lokaltog/vim-easymotion'
+     - 'L9'
      - 'FuzzyFinder'
      - 'git://git.wincent.com/command-t.git'
-     - 'L9'
      - 'scrooloose/nerdtree'
      - 'Lokaltog/powerline'
      - 'lsdr/monokai'
