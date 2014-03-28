@@ -4,3 +4,6 @@
 [submodule "mysetup/ansible"]
 	path = mysetup/ansible
 	url = https://github.com/innyso/ansible.git
+[submodule "serverspec/ansible"]
+	path = serverspec/ansible
+	url = https://github.com/innyso/ansible.git
