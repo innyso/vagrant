@@ -14,9 +14,10 @@
      - 'Lokaltog/powerline'
      - 'lsdr/monokai'
      - 'bling/vim-airline'
-     - 'flazz/vim-colorschemes' 
+     - 'flazz/vim-colorschemes'
      - 'https://github.com/rosenfeld/conque-term'
      - 'https://github.com/nathanaelkane/vim-indent-guides'
+     - 'bronson/vim-trailing-whitespace'
    roles:
     - common
     - oh-my-zsh
