@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  
   config.vm.provider :virtualbox do |vb, override|
     config.vm.hostname="aptly"
-    config.vm.box = "precise64"
+    config.vm.box = "precise32"
   end
 	config.vm.provision :shell, :path => "ansible/scripts/ansible_setup.sh"
 	config.vm.provision :shell, :path => "ansible/scripts/key_setup.sh"
