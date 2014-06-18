@@ -7,3 +7,6 @@
 [submodule "serverspec/ansible"]
 	path = serverspec/ansible
 	url = https://github.com/innyso/ansible.git
+[submodule "aptly/ansible"]
+	path = aptly/ansible
+	url = https://github.com/innyso/ansible.git

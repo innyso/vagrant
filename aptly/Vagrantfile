@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+ 
+  config.vm.provider :virtualbox do |vb, override|
+    config.vm.hostname="aptly"
+    config.vm.box = "precise64"
+  end
+	config.vm.provision :shell, :path => "ansible/scripts/ansible_setup.sh"
+	config.vm.provision :shell, :path => "ansible/scripts/key_setup.sh"
+	config.vm.provision :shell, :inline => "export ANSIBLE_CONFIG=/vagrant/ansible.cfg; ansible-playbook -i '127.0.0.1,' /vagrant/aptly.yml", :privileged => false
+end
