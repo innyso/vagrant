@@ -1,0 +1,12 @@
+---
+ - name: Add aptly repository key
+   sudo: yes
+   apt_key: keyserver=keys.gnupg.net id=2A194991 state=present
+ 
+ - name: Add aptly repository
+   sudo: yes
+   apt_repository: repo='deb http://repo.aptly.info/ squeeze main' state=present update_cache=yes
+
+ - name: Install Aptly
+   sudo: yes
+   apt: name=aptly state=present

@@ -1,0 +1,16 @@
+---
+ - name: install the best editor in the world
+   sudo: yes
+   apt: pkg=vim state=installed
+
+ - name: isntall vundle to manage vim plugin
+   git: repo=https://github.com/gmarik/vundle.git dest=/home/{{item}}/.vim/bundle/vundle
+   with_items: users
+
+ - name: create customize .vimrc
+   template: src=vimrc.j2 dest=/home/{{item}}/.vimrc
+   with_items: users
+ 
+ - name: install all plugins
+   command: vim +BundleInstall +qall
+ 
