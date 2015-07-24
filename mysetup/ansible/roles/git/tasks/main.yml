@@ -1,0 +1,27 @@
+---
+ - name: ensure git is installed
+   apt: pkg=git state=installed
+
+ - name: ensure git user exist
+   user: name=git shell=/usr/bin/git-shell home=/home/git generate_ssh_key=yes
+ 
+ - name: create key file
+   command: touch /home/git/.ssh/authorized_keys creates=/home/git/.ssh/authorized_keys
+
+ - name: add user public key file
+   authorized_key: user=git key="$FILE(item)" state=present
+   with_fileglob:
+    - ./pubkeys/*
+
+ #should create multiple repo depending on the repo name in group_vars
+ - name: create repo folder
+   file: path=/home/git/{{item.name}}.git owner=git group=git mode=0775 state=directory
+   with_items: $repos
+
+ - name: create repo
+   command: chdir=/home/git/{{item.name}}.git creates=/home/git/{{item.name}}.git/HEAD git init --bare
+   with_items: $repos
+
+ - name: update repo permission
+   command: chdir=/home/git/{{item.name}}.git chown git.git -R .
+   with_items: $repos
