@@ -16,7 +16,12 @@
    with_items: users
 
  - name: create zsh config
-   copy: src=/home/{{item}}/.oh-my-zsh/templates/zshrc.zsh-template  dest=/home/{{item}}/.zshrc owner={{item}}
+   command: cp /home/{{item}}/.oh-my-zsh/templates/zshrc.zsh-template /home/{{item}}/.zshrc 
+   with_items: users
+
+ # might need to consider having a group array because username and group not necessary the same
+ - name: doing it the silly way because copy doesnt behave as I expected
+   file: path=/home/{{item}}/.zshrc owner={{item}} group={{item}}
    with_items: users
 
  - name: chsh
