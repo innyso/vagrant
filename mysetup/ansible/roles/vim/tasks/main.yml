@@ -3,14 +3,18 @@
    sudo: yes
    apt: pkg=vim state=installed
 
- - name: isntall vundle to manage vim plugin
-   git: repo=https://github.com/gmarik/vundle.git dest=/home/{{item}}/.vim/bundle/vundle
+ - name: setup directory for pathogen
+   file: path=/home/{{item}}/.vim/autoload state=directory
+   with_items: users
+
+ - name: setup directory for pathogen
+   file: path=/home/{{item}}/.vim/bundle state=directory
+   with_items: users
+
+ - name: install pathogen.vim to manage vim plugin
+   get_url: url=https://tpo.pe/pathogen.vim dest=/home/{{item}}/.vim/autoload
    with_items: users
 
  - name: create customize .vimrc
    template: src=vimrc.j2 dest=/home/{{item}}/.vimrc
    with_items: users
- 
- - name: install all plugins
-   command: vim +BundleInstall +qall
- 
