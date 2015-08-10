@@ -5,19 +5,12 @@
      - vagrant
     state: present
     plugins:
-     - 'tpope/vim-fugitive'
-     - 'Lokaltog/vim-easymotion'
-     - 'L9'
-     - 'FuzzyFinder'
-     - 'git://git.wincent.com/command-t.git'
      - 'scrooloose/nerdtree'
-     - 'Lokaltog/powerline'
-     - 'lsdr/monokai'
+     - 'xolox/vim-notes'
+     - 'xolox/vim-misc' #required by vim-notes
      - 'bling/vim-airline'
-     - 'flazz/vim-colorschemes'
-     - 'https://github.com/rosenfeld/conque-term'
-     - 'https://github.com/nathanaelkane/vim-indent-guides'
-     - 'bronson/vim-trailing-whitespace'
+     - 'airblade/vim-gitgutter'
+     - 'majutsushi/tagbar'
    roles:
     - common
     - oh-my-zsh

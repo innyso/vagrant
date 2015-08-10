@@ -15,6 +15,22 @@
    get_url: url=https://tpo.pe/pathogen.vim dest=/home/{{item}}/.vim/autoload
    with_items: users
 
+ # have to use command module instead of the standard git module
+ # as I do not want to keep another list of the folder destination I would
+ # like to clone to
+ - name: install plugins
+   command: chdir=/home/{{item[0]}}/.vim/bundle git clone https://github.com/{{item[1]}}
+   with_nested:
+     - users
+     - plugins
+   ignore_errors: yes
+
+# - name: install plugins
+#   git: repo=https://github.com/{{item[1]}} dest=/home/{{item[0]}}/.vim/bundle
+#   with_nested:
+#   - users
+#   - plugins
+
  - name: create customize .vimrc
    template: src=vimrc.j2 dest=/home/{{item}}/.vimrc
    with_items: users
