@@ -1,0 +1,15 @@
+---
+ - name: install PHP PEAR
+   apt: pkg=php-pear state=installed
+
+ - name: Update PEAR
+   command: pear upgrade-all
+
+ - name: Setup PEAR channel
+   command: pear channel-discover pear.drush.org creates=/usr/share/php/.channels/pear.drush.org.reg
+
+ - name: Install drush
+   command: pear install drush/drush creates=/usr/bin/drush
+
+ - name: download drush dependencies
+   command: drush
