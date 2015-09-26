@@ -1,0 +1,12 @@
+---
+  - name: Install python-software-properties for add-apt-repository
+    apt: pkg=python-software-properties state=installed
+
+  - name: Add Jenkins apt-key
+    apt_key: url={{jenkins.key}} state=present
+
+  - name: Add Jenkins repository
+    apt_repository: repo='{{jenkins.repo}}' state=present
+
+  - name: Install jenkins through apt
+    apt: pkg=jenkins update_cache=yes state=present

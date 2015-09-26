@@ -1,0 +1,4 @@
+---
+jenkins:
+  key: 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key'
+  repo: 'deb http://pkg.jenkins-ci.org/debian binary/'
