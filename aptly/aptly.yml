@@ -1,7 +1,5 @@
 ---
- - hosts: all
-   vars:
-    users:
-     - vagrant
-   roles:
-     - aptly
+  - hosts: all
+    become: true
+    roles:
+      - aptly
