@@ -1,0 +1,6 @@
+---
+ - name: install apache on ubuntu
+   apt: pkg=apache2-mpm-prefork state={{state}}
+
+ - name: start apache2
+   service: name=apache2 state=running enabled=yes

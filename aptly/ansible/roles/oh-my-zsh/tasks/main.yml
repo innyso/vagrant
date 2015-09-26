@@ -1,0 +1,34 @@
+---
+ - name: install zsh and curl
+   sudo: yes
+   apt: pkg={{item}} state=present
+   with_items:
+    - zsh
+    - curl
+    - git
+
+ - name: make sure .oh-my-zsh folder exist
+   file: path=/home/{{item}}/.oh-my-zsh owner={{item}} group={{item}} state=directory
+   with_items: users
+
+ - name: clone oh-my-zsh repo
+   git: repo=git://github.com/robbyrussell/oh-my-zsh.git  dest=/home/{{item}}/.oh-my-zsh
+   with_items: users
+
+ - name: create zsh config
+   command: cp /home/{{item}}/.oh-my-zsh/templates/zshrc.zsh-template /home/{{item}}/.zshrc 
+   with_items: users
+
+ # might need to consider having a group array because username and group not necessary the same
+ - name: doing it the silly way because copy doesnt behave as I expected
+   file: path=/home/{{item}}/.zshrc owner={{item}} group={{item}}
+   with_items: users
+
+ - name: chsh
+   sudo: yes
+   command: /usr/bin/chsh -s /bin/zsh {{item}}
+   with_items: users
+
+ - name: this should be in git for setting alias
+   template: src=gitconfig.j2 dest=/home/{{item}}/.gitconfig
+   with_items: users
