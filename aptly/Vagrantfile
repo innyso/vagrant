@@ -8,9 +8,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  
   config.vm.provider :virtualbox do |vb, override|
     config.vm.hostname="aptly"
-    config.vm.box = "precise32"
+    config.vm.box = "trusty64"
   end
-	config.vm.provision :shell, :path => "ansible/scripts/ansible_setup.sh"
-	config.vm.provision :shell, :path => "ansible/scripts/key_setup.sh"
-	config.vm.provision :shell, :inline => "export ANSIBLE_CONFIG=/vagrant/ansible.cfg; ansible-playbook -i '127.0.0.1,' /vagrant/aptly.yml", :privileged => false
+  config.vm.network :private_network, ip: "192.168.50.5"
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "aptly.yml"
+    ansible.verbose='vvv'
+  end
 end
