@@ -7,3 +7,37 @@
 
  - name: Install Aptly
    apt: name=aptly state=present
+
+ - name: update sample app package
+   copy: src=sample_app_1.0_all.deb dest=/tmp/
+
+ - name: create same app repostiory
+   shell: aptly create repo sample-app
+
+ - name: add sample deb package
+   shell: aptly repo add sample-app /tmp/sample_app_1.0_all.deb
+
+ - name: publish sample-app repo
+   shell: aptly -architectures="amd64" --skip-signing publish repo sample-app sample-app
+
+ - name: add sample sensu mirror
+   shell: aptly -architectures='amd64' -filter='sensu (>=0.20.1)' mirror create sensu-mirror http://repos.sensuapp.org/apt sensu main
+
+ - name: Install nginx
+   apt: name=nginx state=present
+
+ - name: remove nginx default page
+   file: path=/etc/nginx/site-enabled/default state=absent
+
+ - name: replace with custom nginx config
+   copy: src=nginx-aptly.conf dest=/etc/nginx/site-available/aptly.conf owner=root group=root mode=644
+
+ - name: create symlink to config
+   file: src=/etc/nginx/site-available/aptly.conf dest=/etc/nginx/site-enabled/aptly.conf state=link
+   notify: reload nginx
+
+ - name: create prod latest foler
+   file: path=/home/vagrant/production/latest state=directory
+
+ - name: create dev latest folder
+   file: path=/home/vagrant/dev/latest state=directory
