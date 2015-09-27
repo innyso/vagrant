@@ -9,31 +9,47 @@
    apt: name=aptly state=present
 
  - name: update sample app package
+   become: vagrant
    copy: src=sample_app_1.0_all.deb dest=/tmp/
 
  - name: create same app repostiory
-   shell: aptly create repo sample-app
+   become: vagrant
+   shell: aptly repo create sample-app
 
  - name: add sample deb package
+   become: vagrant
    shell: aptly repo add sample-app /tmp/sample_app_1.0_all.deb
 
  - name: publish sample-app repo
-   shell: aptly -architectures="amd64" --skip-signing publish repo sample-app sample-app
+   become: vagrant
+   shell: aptly --skip-signing -architectures='amd64' -distribution="`lsb_release -cs`" publish repo sample-app sample-app
+
+ - name: add gpg key for sensu-mirror
+   become: vagrant
+   shell: gpg --no-default-keyring --keyring trustedkeys.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 7580C77F
 
  - name: add sample sensu mirror
+   become: vagrant
    shell: aptly -architectures='amd64' -filter='sensu (>=0.20.1)' mirror create sensu-mirror http://repos.sensuapp.org/apt sensu main
+
+ - name: update sample sensu mirror
+   become: vagrant
+   shell: aptly mirror update sensu-mirror
 
  - name: Install nginx
    apt: name=nginx state=present
 
  - name: remove nginx default page
-   file: path=/etc/nginx/site-enabled/default state=absent
+   file: path=/etc/nginx/sites-enabled/default state=absent
 
  - name: replace with custom nginx config
-   copy: src=nginx-aptly.conf dest=/etc/nginx/site-available/aptly.conf owner=root group=root mode=644
+   copy: src=nginx-aptly.conf dest=/etc/nginx/sites-available/aptly.conf owner=root group=root mode=644
+
+ - name: use custom nginx.conf instead
+   file: src=nginx.conf dest=/etc/nginx/nginx.conf
 
  - name: create symlink to config
-   file: src=/etc/nginx/site-available/aptly.conf dest=/etc/nginx/site-enabled/aptly.conf state=link
+   file: src=/etc/nginx/sites-available/aptly.conf dest=/etc/nginx/sites-enabled/aptly.conf state=link
    notify: reload nginx
 
  - name: create prod latest foler
